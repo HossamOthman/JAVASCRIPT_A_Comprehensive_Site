@@ -14,6 +14,12 @@ function ready() {
             removeCartItem(e);
         })
     }
+
+    var quantityInputs = document.getElementsByClassName('cart-quantity-input');
+    for (var i = 0; i < quantityInputs.length; i++) {
+        var input = quantityInputs[i];
+        input.addEventListener('change', quantityChanged)
+    }
 }
 
 
@@ -39,5 +45,14 @@ function updateCartTotal() {
 
         total = total + (price * quantity)
     }
+    total = Math.round(total * 100) / 100;
     document.querySelector('.cart-total-price').innerText = '$' + total;
+}
+
+function quantityChanged(e) {
+    var input = e.target;
+    if(isNaN(input.value) || input.value <= 0) {
+        input.value = 1
+    }
+    updateCartTotal()
 }
