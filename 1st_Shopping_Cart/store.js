@@ -27,6 +27,7 @@ function ready() {
         button.addEventListener('click', addToCartClicked)
     }
 
+    document.querySelector('.btn-purchase').addEventListener('click', purchaseClicked);
 }
 
 
@@ -103,4 +104,13 @@ function addItemToCart(title, price, imgSrc) {
     cartItems.append(cartRow);
     cartRow.querySelector('.btn-danger').addEventListener('click', removeCartItem);
     cartRow.querySelector('.cart-quantity-input').addEventListener('change', quantityChanged);
+}
+
+function purchaseClicked() {
+    alert('thank you for your Purchase!')
+    var cartItems = document.querySelector('.cart-items');
+    while (cartItems.hasChildNodes()) {
+        cartItems.removeChild(cartItems.firstChild);
+        updateCartTotal();
+    }
 }
