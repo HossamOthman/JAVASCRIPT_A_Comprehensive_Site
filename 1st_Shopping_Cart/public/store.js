@@ -106,11 +106,24 @@ function addItemToCart(title, price, imgSrc) {
     cartRow.querySelector('.cart-quantity-input').addEventListener('change', quantityChanged);
 }
 
-function purchaseClicked() {
-    alert('thank you for your Purchase!')
-    var cartItems = document.querySelector('.cart-items');
-    while (cartItems.hasChildNodes()) {
-        cartItems.removeChild(cartItems.firstChild);
-        updateCartTotal();
+var stripeHandler = StripeCheckout.configure({
+    key: stripePublicKey,
+    locale: 'auto',
+    token: function(token) {
+        console.log(token)
     }
+})
+
+function purchaseClicked() {
+    // alert('thank you for your Purchase!')
+    // var cartItems = document.querySelector('.cart-items');
+    // while (cartItems.hasChildNodes()) {
+    //     cartItems.removeChild(cartItems.firstChild);
+    //     updateCartTotal();
+    // }
+    var priceElement = document.querySelector('.cart-total-price');
+    var price = parseFloat(priceElement.innerText.replace('$', '')) * 100;
+    stripeHandler.open({
+        amount: price
+    })
 }
